@@ -1,6 +1,11 @@
 FROM openjdk:11
 WORKDIR /wainer/app-transferenciawainer
-COPY /build/libs/*.jar /app.jar
+COPY /build/libs/transferenciaWainer-0.1-all.jar /app.jar
+#em tempo de build
+ARG PORT_BUILD=8080
+#em tempo de execucao
+ENV PORT=$PORT_BUILD
+EXPOSE $PORT_BUILD
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom"]
 CMD ["-jar","/app.jar"]
 
