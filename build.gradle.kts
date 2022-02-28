@@ -46,7 +46,7 @@ dependencies {
 //project.configurations.implementation.setCanBeResolved(true)
 
 application {
-    mainClass.set("br.com.itau.bootcamp.Application.kt")
+    mainClass.set("br.com.itau.bootcamp.ApplicationKt")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
