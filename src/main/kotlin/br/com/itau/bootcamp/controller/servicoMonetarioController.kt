@@ -1,5 +1,6 @@
 package br.com.itau.bootcamp.controller
 
+import br.com.itau.bootcamp.config.DynamoDBMapperConfig
 import br.com.itau.bootcamp.dto.*
 import br.com.itau.bootcamp.service.ListaConta
 import br.com.itau.bootcamp.service.ServicoMonetarioService
@@ -15,6 +16,9 @@ import javax.validation.Valid
 open class ServicoMonetarioController(private val servicoMonetario: ServicoMonetarioService,
                                       private val dadosConta: ListaConta
 ) {
+    init {
+        DynamoDBMapperConfig()
+    }
 
     @Get("/contas/{cpf}")
     fun consultarPorCPF(@PathVariable cpf: String): List<Contas>{

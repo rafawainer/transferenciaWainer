@@ -1,3 +1,5 @@
+import java.util.regex.Pattern.compile
+
 // Required by the 'shadowJar' task
 //project.setProperty("mainClassName", "br.com.itau.bootcamp.ApplicationKt")
 
@@ -5,8 +7,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.10"
     id("org.jetbrains.kotlin.kapt") version "1.6.10"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.6.10"
-//    id("com.github.jengelman.gradle.plugins:shadow") version "6.0.0"
-    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+//    id("com.github.johnrengelman.shadow") version "7.1.1"
     id("io.micronaut.application") version "3.2.1"
 
 }
@@ -35,6 +37,13 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation ("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     implementation ("io.projectreactor.kotlin:reactor-kotlin-extensions:1.1.5")
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    //    implementation("software.amazon.awssdk:dynamodb")
+    implementation("com.github.derjust:spring-data-dynamodb:5.1.0")
+    compile("com.amazonaws:aws-java-sdk-dynamodb:1.11.887")
+    implementation("io.github.boostchicken:spring-data-dynamodb:5.2.1")
 
 //    "kotlinCompilerClasspath"(fileTree("build/kotlin"))
     implementation("org.apache.commons:commons-lang3:3.5")

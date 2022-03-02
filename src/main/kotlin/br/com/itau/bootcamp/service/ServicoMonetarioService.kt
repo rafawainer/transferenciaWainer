@@ -77,8 +77,8 @@ class ServicoMonetarioService (private val dadosContaOrigem: ListaConta,
 
         val contaOrigemValidada = validaSaque(contaOrigem)
 
-        val saqueOrigem = realizaSaque(contaOrigemValidada, contaOrigem)
-        val depositoDestino = realizaDeposito(validaDeposito(contaDestino), contaDestino)
+        realizaSaque(contaOrigemValidada, contaOrigem)
+        realizaDeposito(validaDeposito(contaDestino), contaDestino)
 
         println("Transferencia realizada com sucesso -> <Conta Origem: ${contaOrigem.conta} | Conta Destino: ${contaDestino.conta} | Valor Transferencia: R$${transferencia.valorTransferencia}")
 

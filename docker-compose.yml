@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    hostname: dynamodb-local
+    container_name: transferencias-dynamodb
+    ports:
+      - 8090:8000
+    networks:
+      - network-transferencias
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath . -optimizeDbBeforeStartup
+    volumes:
+      - dynamodb:/home/Users/Rafael/Documents/branches/volume-dynamodb
+    ports:
+      - 8000:8000
+#  awscli:
+#    build: .
+#    entrypoint: [ "" ]
+#    tty: true
+#    command:
+#      - /bin/sh
+
+  appwainer:
+    image: wainer/kotlin-app:0.0.2
+    container_name: transferencias-appwainer
+    networks:
+      - network-transferencias
+    ports:
+      - 8080:8080
+    depends_on:
+      - dynamodb
+
+volumes:
+  dynamodb:
+    driver: local
+
+networks:
+  network-transferencias:
+    driver: bridge
+
+#
+#  mongodb:
+#    image: mongo:4.4.6
+#    container_name: meu-mongo
+#    networks:
+#      - compose-wainer
+#
+#  alura-books:
+#    image: aluradocker/alura-books:1.0
+#    container_name: alura-books
+#    networks:
+#      - compose-wainer
+#    ports:
+#      - 3000:3000
+#    depends_on:
+#      - mongodb
+#
+#
+#networks:
+#  compose-wainer:
+#    driver: bridge
