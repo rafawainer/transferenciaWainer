@@ -2,6 +2,7 @@ package br.com.itau.bootcamp.controller
 
 import br.com.itau.bootcamp.config.DynamoDBMapperConfig
 import br.com.itau.bootcamp.dto.*
+import br.com.itau.bootcamp.service.Historico
 import br.com.itau.bootcamp.service.ListaConta
 import br.com.itau.bootcamp.service.ServicoMonetarioService
 import io.micronaut.context.annotation.Parameter
@@ -14,10 +15,27 @@ import javax.validation.Valid
 @Controller()
 @Validated
 open class ServicoMonetarioController(private val servicoMonetario: ServicoMonetarioService,
+                                      private val historico: Historico,
                                       private val dadosConta: ListaConta
 ) {
     init {
         DynamoDBMapperConfig()
+    }
+
+    @Get("transferencias/{cpf}")
+    fun consultarTransferencias(@PathVariable cpf: String, @Parameter tipoConsulta: String
+//    fun consultarTransferencias(@PathVariable cpf: String, @Parameter @Valid tipoConsulta: TipoConsultaRequest
+    ) : HttpResponse <List<HistoricoDto>> {
+
+        var retornoSucesso: List<HistoricoDto> = emptyList()
+
+        if (tipoConsulta == "cpf") {
+            retornoSucesso = historico.buscaHistoricoPorCPF(cpf)
+        } else if (tipoConsulta == "ult") {
+            retornoSucesso = historico.buscaHistoricoUltimo(cpf)
+        }
+
+        return HttpResponse.ok(retornoSucesso)
     }
 
     @Get("/contas/{cpf}")

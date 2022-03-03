@@ -52,7 +52,10 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 }
-//project.configurations.implementation.setCanBeResolved(true)
+allOpen {
+    // Mark any classes with the following transactions as `open` automatically.
+    annotations("io.micronaut.aop.Around", "javax.transaction.Transactional")
+}
 
 application {
     mainClass.set("br.com.itau.bootcamp.ApplicationKt")

@@ -2,6 +2,7 @@ package br.com.itau.bootcamp.service
 
 import br.com.itau.bootcamp.dto.*
 import br.com.itau.bootcamp.mapper.TransferenciaDestinoMapper
+import br.com.itau.bootcamp.mapper.TransferenciaHistoricoMapper
 import br.com.itau.bootcamp.mapper.TransferenciaMapper
 import br.com.itau.bootcamp.mapper.TransferenciaOrigemMapper
 import jakarta.inject.Singleton
@@ -10,7 +11,9 @@ import jakarta.inject.Singleton
 class ServicoMonetarioService (private val dadosContaOrigem: ListaConta,
                                private val origemMapper: TransferenciaOrigemMapper,
                                private val destinoMapper: TransferenciaDestinoMapper,
-                               private val transferenciaMapper: TransferenciaMapper
+                               private val transferenciaMapper: TransferenciaMapper,
+                               private val transferenciaHistoricoMapper: TransferenciaHistoricoMapper,
+                               private val historico: Historico
 ){
 
     fun validaDeposito (deposito: DepositarRequest): Contas {
@@ -81,6 +84,10 @@ class ServicoMonetarioService (private val dadosContaOrigem: ListaConta,
         realizaDeposito(validaDeposito(contaDestino), contaDestino)
 
         println("Transferencia realizada com sucesso -> <Conta Origem: ${contaOrigem.conta} | Conta Destino: ${contaDestino.conta} | Valor Transferencia: R$${transferencia.valorTransferencia}")
+
+        historico.salvaHistorico(transferenciaHistoricoMapper.map(transferencia))
+
+        println("Transferencia salva na base com sucesso -> <Conta Origem: ${contaOrigem.conta} | Conta Destino: ${contaDestino.conta} | Valor Transferencia: R\$${transferencia.valorTransferencia}\")")
 
         return transferenciaMapper.map(transferencia)
     }
